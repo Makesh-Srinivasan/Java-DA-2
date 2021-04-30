@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch da2q2",
+            "request": "launch",
+            "mainClass": "da2q2",
+            "projectName": "DA 2_fedc5a4b"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - App",
+            "request": "launch",
+            "mainClass": "com.test.maven.App",
+            "console": "internalConsole",
+            "projectName": "DA 2"
+        }
+    ]
+}

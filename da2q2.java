@@ -1,8 +1,4 @@
-// ead the aadhar number and Mobile Number of a employee.
-// fun1 If the aadhar number does not contain exactly 12 characters or if the Mobile Number does not contain exactly 10 characters, throw an IllegalArgumentException.
-// fun2 If the Mobile Number contains any character other than a digit, raise a NumberFormatException.
-// If the aadhar number contains any character other than digits and alphabets, throw a NoSuchElementException.
-// If they are valid, print the message ‘valid’ else ‘invalid’. Write a java program for the above scenario with an appropiate exceptions.
+import java.util.Scanner;
 
 class NoSuchElementException extends Exception{
     NoSuchElementException(String s){
@@ -12,47 +8,32 @@ class NoSuchElementException extends Exception{
 class Employee{
     String phone;
     String aadhar;
+    boolean valid = true;
     Employee(String phone, String aadhar){
         this.phone = phone;
         this.aadhar = aadhar;
     }
-    public void check_aadhar_character() throws NoSuchElementException{
-        char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
-        char[] valid_characters = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
-        System.arraycopy(alphabet, 0, valid_characters, 0, alphabet.length);
-        int count = 0;
+    public void validate_3() throws NoSuchElementException{
         char[] aadhar_array = aadhar.toCharArray();
         for (char c : aadhar_array) {
-            for (char d : valid_characters) {
-                if(c == d){
-                    count += 1;
-                }
-            }
-        }
-        if(count != aadhar.length()){
-            throw new NoSuchElementException("There are invalid characters in your aadhar");
-        }
-    }
-    public void validate_aadhar(){
-        if(aadhar.length() != 12){
-            throw new IllegalArgumentException("Your aadhar number does not have 12 characters");
-        } else {
-            try{
-                check_aadhar_character();
-            } catch (Exception e){
-                System.out.println(e);
+            if(!(Character.isDigit(c) || Character.isAlphabetic(c))){
+                valid = false;
+                throw new NoSuchElementException("NoSuchElementException: There are invalid characters in your aadhar");
             }
         }
     }
-    public void validate_phone(){
-        if(phone.length() != 10){
-            throw new IllegalArgumentException("Your phone number does not have 10 characters");
-        } else {
-            char[] phone_array = phone.toCharArray();
-            for (char c : phone_array) {
-                if(!Character.isDigit(c)){
-                    throw new NumberFormatException("There are non-digits in the phone number");
-                }
+    public void validate_1(){
+        if(aadhar.length() != 12 || phone.length() != 10){
+            valid = false;
+            throw new IllegalArgumentException("IllegalArgumentException: Incorrect number of characters");
+        }
+    }
+    public void validate_2(){
+        char[] phone_array = phone.toCharArray();
+        for (char c : phone_array) {
+            if(!Character.isDigit(c)){
+                valid = false;
+                throw new NumberFormatException("NumberFormatException: There are non-digits in the phone number");
             }
         }
     }
@@ -66,13 +47,53 @@ class da2q2{
     }
     public static void main(String args[]){
         System.out.println("");
-        Employee e1 = new Employee("1234110123", "@11111111111");
-        try{
-            e1.validate_aadhar();
-            e1.validate_phone();
-        } catch(Exception e){
-            // Print the error
-            System.out.println(e);
+        drawline("*");
+        int n = 0;
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter the number of employees: ");
+        n = input.nextInt();
+        Employee[] emploee = new Employee[n];
+        for (int i = 0; i < emploee.length; i++) {
+            String phone, aadhar;
+            System.out.println("\nEmployee " + (i+1) + ")");
+            System.out.print("Enter phone number: ");
+            phone = input.next();
+            System.out.print("Enter aadhar number: ");
+            aadhar = input.next();
+            emploee[i] = new Employee(phone, aadhar);
         }
+        drawline("_");
+        System.out.println("\nVALIDATION:\n");
+        for (int i = 0; i < emploee.length; i++) {
+            System.out.println("Employee " + (i+1) +": ");
+            try{
+                emploee[i].validate_1();
+            } catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+            try{
+                emploee[i].validate_2();
+            } catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+            try{
+                emploee[i].validate_3();
+            } catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+            if(emploee[i].valid){
+                System.out.println("Valid");
+            } else {
+                System.out.println("Invalid");
+            }
+            drawline("_");
+        }
+        input.close();
     }
 }
+
+//emploee[0] = new Employee("12341l3", "@no8g8g");
+// emploee[1] = new Employee("12345678900", "12123lqno8g8g");
+// emploee[2] = new Employee("123456789w", "12123lno8g8g");
+// emploee[3] = new Employee("1234567890", "12123@no8g8g");
+// emploee[4] = new Employee("1234567890", "12123qno8g8g");
