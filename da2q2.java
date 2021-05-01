@@ -91,8 +91,14 @@ class da2q2{
         input.close();
     }
 }
-//emploee[0] = new Employee("12341l3", "@no8g8g");
-// emploee[1] = new Employee("12345678900", "12123lqno8g8g");
-// emploee[2] = new Employee("123456789w", "12123lno8g8g");
-// emploee[3] = new Employee("1234567890", "12123@no8g8g");
-// emploee[4] = new Employee("1234567890", "12123qno8g8g");
+
+// 12341l3
+// @no8g8g
+// 12345678900
+// 12123lqno8g8g
+// 123456789w
+// 12123lno8g8g
+// 1234567890
+// 12123@no8g8g
+// 1234567890
+// 12123qno8g8g

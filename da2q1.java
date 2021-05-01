@@ -45,7 +45,12 @@ class Vehicle{
             price += Price.get_base(vehicle_type);
             price += x * Price.get_hourly_price(vehicle_type);
         } else {
-            price += Price.car_base;
+            if(total_time != 0){
+                price += Price.get_base(vehicle_type);
+            } else {
+                price = 0;
+            }
+            
         }
         return price;
     }
@@ -89,7 +94,7 @@ class Hour_glass{
             }
             elapsed_time = x;
         }
-        System.out.println("Elapsed time: "+elapsed_time);
+        System.out.println("Elapsed time: "+ elapsed_time + " minutes");
         return elapsed_time;
     }
 }
