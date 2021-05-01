@@ -38,7 +38,8 @@ class Vehicle{
     }
     public float get_bill(){
         float price = 0;
-        Double x = Math.ceil(total_time/60);
+        float buffer_time = total_time;
+        Double x = Math.ceil(buffer_time/60);
         if(x > 3){
             x -= 3;
             price += Price.get_base(vehicle_type);
@@ -77,15 +78,18 @@ class Hour_glass{
     public int elapsedTime(Hour_glass t2){
         int elapsed_time = 0;
         if(this.isGreaterThan(t2) == 1){
-            int x = hour - t2.hour;
-            int y = minute - t2.minute;
-            x = x * 60;
-            if(y < 0){
+            int x = hour - t2.hour; //5
+            int y = minute - t2.minute; //-5
+            x = x * 60;//300
+            if(y > 0){
                 x -= 60;
                 x = x + 60-(y*-1);
+            } else {
+                x = x + y;
             }
             elapsed_time = x;
         }
+        System.out.println("Elapsed time: "+elapsed_time);
         return elapsed_time;
     }
 }
@@ -95,9 +99,15 @@ class da2q1{
             throw new InvalidOutTIme("Incorrect Out-time. Perhaps, you have entered IN-time instead of OUT-time?");
         }
     }
-
+    public static void drawline(String symbol){
+        for(int i = 0; i < 50; i++){
+            System.out.print(symbol);
+        }
+        System.out.println("");
+    }
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
+        drawline("*");
         System.out.print("Enter the number of vehicles: ");
         int n = input.nextInt();
         for (int i = 0; i < n; i++) {
@@ -109,7 +119,7 @@ class da2q1{
             Hour_glass in_time = new Hour_glass(input.nextLine());
             System.out.print("Enter the out-time in 24Hr format (hh mm): ");
             Hour_glass out_time = new Hour_glass(input.nextLine());
-            
+            drawline("_");
             try{
                 validate_out_time(out_time, in_time);
             } catch (Exception timeswap){
@@ -121,8 +131,8 @@ class da2q1{
                 Vehicle vehicle = new Vehicle(type, in_time, out_time);
                 float bill = vehicle.get_bill();
                 System.out.println("Bill: " + bill);
+                drawline("_");
             }
-
         }
         input.close();
     }
