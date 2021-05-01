@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch da2q1",
+            "request": "launch",
+            "mainClass": "da2q1",
+            "projectName": "DA 2_fedc5a4b"
+        },
+        {
+            "type": "java",
             "name": "Launch da2q2",
             "request": "launch",
             "mainClass": "da2q2",
