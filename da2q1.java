@@ -5,6 +5,11 @@ class InvalidOutTIme extends Exception{
         super(s);
     }
 }
+class InvalidInAndOutTime extends Exception{
+    InvalidInAndOutTime(String s){
+        super(s);
+    }
+}
 class Price{
     static float car_base = 100;
     static float car_hourly = 30;
@@ -49,8 +54,7 @@ class Vehicle{
                 price += Price.get_base(vehicle_type);
             } else {
                 price = 0;
-            }
-            
+            }   
         }
         return price;
     }
@@ -83,9 +87,9 @@ class Hour_glass{
     public int elapsedTime(Hour_glass t2){
         int elapsed_time = 0;
         if(this.isGreaterThan(t2) == 1){
-            int x = hour - t2.hour; //5
-            int y = minute - t2.minute; //-5
-            x = x * 60;//300
+            int x = hour - t2.hour;
+            int y = minute - t2.minute;
+            x = x * 60;
             if(y > 0){
                 x -= 60;
                 x = x + 60-(y*-1);
@@ -99,13 +103,15 @@ class Hour_glass{
     }
 }
 class da2q1{
-    public static void validate_out_time(Hour_glass out_time, Hour_glass in_time) throws InvalidOutTIme{
-        if(out_time.isGreaterThan(in_time) < 1){
+    public static void validate_out_time(Hour_glass out_time, Hour_glass in_time) throws InvalidInAndOutTime, InvalidOutTIme{
+        if(out_time.isGreaterThan(in_time) < 0){
             throw new InvalidOutTIme("Incorrect Out-time. Perhaps, you have entered IN-time instead of OUT-time?");
+        } else if(out_time.isGreaterThan(in_time) == 0){
+            throw new InvalidInAndOutTime("IN and OUT time are same!");
         }
     }
     public static void drawline(String symbol){
-        for(int i = 0; i < 50; i++){
+        for(int i = 0; i < 75; i++){
             System.out.print(symbol);
         }
         System.out.println("");
@@ -116,7 +122,7 @@ class da2q1{
         System.out.print("Enter the number of vehicles: ");
         int n = input.nextInt();
         for (int i = 0; i < n; i++) {
-            System.out.println("Vehicle "+ (i+1)+ ") ");
+            System.out.println("\nVehicle "+ (i+1)+ ") ");
             System.out.print("Enter the type of vehicle: ");
             char type = input.next().charAt(0);
             System.out.print("Enter the in-time in 24Hr format (hh mm): ");
@@ -127,17 +133,35 @@ class da2q1{
             drawline("_");
             try{
                 validate_out_time(out_time, in_time);
-            } catch (Exception timeswap){
+            } catch (InvalidOutTIme timeswap){
                 System.out.println(timeswap.getMessage());
-                Hour_glass temp = out_time;
-                out_time = in_time;
-                in_time = temp;
-            } finally{
-                Vehicle vehicle = new Vehicle(type, in_time, out_time);
-                float bill = vehicle.get_bill();
-                System.out.println("Bill: " + bill);
-                drawline("_");
+                System.out.print("Do you want to swap IN and OUT time? (y/n): ");
+                char option = input.next().charAt(0);
+                if(option == 'y'){
+                    Hour_glass temp = out_time;
+                    out_time = in_time;
+                    in_time = temp;
+                } else {
+                    System.out.println("You have entered 'n' (no) indicating error in your entry. Entry cancelled");
+                    i--;
+                    drawline(" ");
+                    continue;
+                }
+            } catch (InvalidInAndOutTime samefields){
+                System.out.println(samefields.getMessage());
+                System.out.print("Vehicle entered and exited at the same time. Do you want to continue processing? (y/n): ");
+                char option = input.next().charAt(0);
+                if(option == 'n'){
+                    System.out.println("You have entered 'n' (no) indicating error in your entry. Entry cancelled");
+                    i--;
+                    drawline(" ");
+                    continue;
+                }
             }
+            Vehicle vehicle = new Vehicle(type, in_time, out_time);
+            float bill = vehicle.get_bill();
+            System.out.println("Bill: " + bill);
+            drawline("*");
         }
         input.close();
     }
