@@ -89,36 +89,21 @@ class Hour_glass{
         return elapsed_time;
     }
 }
-public static class Input{
-    public char get_type(String s){
-        Scanner input = new Scanner(System.in);
-        System.out.println(s);
-        char type = input.next().charAt(0);
-        input.close();
-        return type;
-    }
-    public char get_time(String s){
-        Scanner input = new Scanner(System.in);
-        System.out.println(s);
-        char type = input.next().charAt(0);
-        input.close();
-        return type;
-    }
-}
 class da2q1{
     public static void validate_out_time(Hour_glass out_time, Hour_glass in_time) throws InvalidOutTIme{
         if(out_time.isGreaterThan(in_time) < 1){
             throw new InvalidOutTIme("Incorrect Out-time. Perhaps, you have entered IN-time instead of OUT-time?");
         }
     }
+
     public static void main(String[] args) {
-        
+        Scanner input = new Scanner(System.in);
         System.out.print("Enter the number of vehicles: ");
         int n = input.nextInt();
         for (int i = 0; i < n; i++) {
             System.out.println("Vehicle "+ (i+1)+ ") ");
-            
-            char type = Input.get_time("Enter the type of vehicle: ");
+            System.out.print("Enter the type of vehicle: ");
+            char type = input.next().charAt(0);
             System.out.print("Enter the in-time in 24Hr format (hh mm): ");
             input.nextLine();
             Hour_glass in_time = new Hour_glass(input.nextLine());
