@@ -117,8 +117,7 @@ class da2q1{
         int n = input.nextInt();
         for (int i = 0; i < n; i++) {
             System.out.println("Vehicle "+ (i+1)+ ") ");
-            // System.out.print("Enter the type of vehicle: ");
-            // char type = input.next().charAt(0);
+            
             char type = Input.get_time("Enter the type of vehicle: ");
             System.out.print("Enter the in-time in 24Hr format (hh mm): ");
             input.nextLine();
