@@ -31,12 +31,12 @@ class da2q4_write{
     }
     public static void main(String[] args) throws Exception{
         int running = 1;
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("something.txt"));
-        ArrayList<Student> woi=new ArrayList<>();
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("student_details.txt"));
+        ArrayList<Student> array = new ArrayList<>();
         Scanner input = new Scanner(System.in);
         drawline("*");
         while(running >= 1){
-            System.out.println("Student " + running + ") ");
+            System.out.println("\nStudent " + running + ") ");
             System.out.print("Enter name: ");
             String name = input.next();
 
@@ -53,13 +53,9 @@ class da2q4_write{
             String address = input.next();
 
             Student student = new Student(name, age, regno, phone,address);
-            woi.add(student);
-            // woi.flush();
-            out.writeObject(woi);
-            out.close();
-            System.out.println("");
+            array.add(student);
             drawline("_");
-            System.out.print("\nDo you want to calculate more? (y/n)");
+            System.out.print("Do you want to calculate more? (y/n)");
             char confirmed = input.next().charAt(0);
             if(confirmed == 'n'){
                 running = 0;
@@ -67,7 +63,9 @@ class da2q4_write{
                 running += 1;
             }
         }
-        
+
+        out.writeObject(array);
+        out.close();
         input.close();
     }
 }

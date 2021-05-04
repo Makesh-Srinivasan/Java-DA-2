@@ -1,6 +1,8 @@
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.ObjectInputStream;
 import java.util.regex.*;  
+import java.util.ArrayList;
 
 class da2q4_read{
     public static void drawline(String symbol){
@@ -11,19 +13,30 @@ class da2q4_read{
     }
     public static void main(String[] args) throws Exception{
         Pattern p = Pattern.compile("[1][9]([A-Z]){3}[0-9]{4}"); 
-
-        FileInputStream fin = new FileInputStream("something.txt");
+        ArrayList<Student> array = new ArrayList<>();
+        FileInputStream fin = new FileInputStream("student_details.txt");
         ObjectInputStream in = new ObjectInputStream(fin);
-
+        
+        try{
+            array = (ArrayList<Student>)in.readObject();
+            drawline("*");
+            System.out.println("The students that graduate in 2023 or joined UG in 2019 are:");
+        } catch (FileNotFoundException e){
+            e.getStackTrace();
+        }
         for (int i = 0; i < 3; i++) {
-            Student s1 = (Student)in.readObject();
-            Matcher m = p.matcher(s1.get_regno());  
+            Student student = array.get(i);
+            Matcher m = p.matcher(student.get_regno());  
             boolean matches = m.matches();  
             if(matches){
-                System.out.println(s1.name);
+                drawline("_");
+                System.out.println("Name: " + student.name);
+                System.out.println("Age: " + student.age);
+                System.out.println("Registration number: " + student.regno);
+                System.out.println("Phone: " + student.phone);
+                System.out.println("Address: " + student.address);
             }
         }
-        
         in.close();
     }
 }
