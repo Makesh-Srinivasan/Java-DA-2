@@ -2,6 +2,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch da2q4_read",
+            "request": "launch",
+            "mainClass": "da2q4_read",
+            "projectName": "DA 2_fedc5a4b"
+        },
+        {
+            "type": "java",
+            "name": "Launch da2q4_write",
+            "request": "launch",
+            "mainClass": "da2q4_write",
+            "projectName": "DA 2_fedc5a4b"
+        },
+        {
+            "type": "java",
             "name": "Launch da2q4",
             "request": "launch",
             "mainClass": "da2q4",
